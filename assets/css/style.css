@@ -449,6 +449,7 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.15; }
 }
 .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
 .project-thumb {
+  position: relative;
   height: 130px;
   display: flex; align-items: center; justify-content: center;
   font-size: 2.6rem;
@@ -460,7 +461,31 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.15; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center;
+  transition: transform .4s ease;
+}
+.project-thumb.has-img.thumb-top img { object-position: top center; }
+.project-card:hover .project-thumb.has-img img { transform: scale(1.08); }
+
+.thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px 18px;
+  background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.78) 100%);
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+.project-card:hover .thumb-overlay { opacity: 1; }
+.thumb-overlay span {
+  color: #fff;
+  font-weight: 700;
+  font-size: .85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 .project-body { padding: 22px 24px 26px; }
 .project-body h3 { font-size: 1.05rem; margin-bottom: 8px; }

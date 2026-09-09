@@ -85,7 +85,7 @@
     "Software Developer",
     "Automation Developer",
     "Laravel & React Engineer",
-    "Android App Developer",
+    "Android & Flutter Developer",
     "Python Scraping Specialist",
   ];
   const typedEl = document.getElementById("typedRole");
