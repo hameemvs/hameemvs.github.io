@@ -693,6 +693,16 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.15; }
 .modal-content h3 { font-size: 1.3rem; margin-bottom: 12px; }
 .modal-content p { color: var(--text-muted); margin-bottom: 16px; line-height: 1.65; }
 .modal-content .project-links { margin-top: 18px; }
+#modalDesc h4 {
+  color: var(--accent);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  margin: 20px 0 8px;
+}
+#modalDesc h4:first-child { margin-top: 0; }
+#modalDesc p:last-of-type { margin-bottom: 0; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {

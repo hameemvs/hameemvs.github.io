@@ -180,6 +180,7 @@
   const modalTags = document.getElementById("modalTags");
   const modalLinks = document.getElementById("modalLinks");
   const modalClose = document.getElementById("modalClose");
+  const modalGallery = document.querySelector(".modal-gallery");
 
   // Extra gallery images not shown on the card itself, keyed by data-project id.
   const extraProjectImages = {
@@ -202,12 +203,24 @@
   function openProjectModal(card) {
     const thumbImg = card.querySelector(".project-thumb img");
     const id = card.dataset.project;
-    modalImages = [thumbImg.getAttribute("src"), ...(extraProjectImages[id] || [])];
-    modalImageIndex = 0;
-    renderModalImage();
+
+    if (thumbImg) {
+      modalGallery.hidden = false;
+      modalImages = [thumbImg.getAttribute("src"), ...(extraProjectImages[id] || [])];
+      modalImageIndex = 0;
+      renderModalImage();
+    } else {
+      modalGallery.hidden = true;
+      modalImages = [];
+    }
 
     modalTitle.textContent = card.querySelector(".project-body h3").textContent;
-    modalDesc.textContent = card.querySelector(".project-body p").textContent;
+    const fullDesc = card.querySelector(".project-full-desc");
+    if (fullDesc) {
+      modalDesc.innerHTML = fullDesc.innerHTML;
+    } else {
+      modalDesc.textContent = card.querySelector(".project-body p").textContent;
+    }
 
     modalTags.innerHTML = "";
     card.querySelectorAll(".tag-list.small li").forEach((li) => {

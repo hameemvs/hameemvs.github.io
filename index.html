@@ -246,6 +246,26 @@
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <div class="timeline-head">
+              <h3>Document Extraction Pipeline — Freelance / Contract</h3>
+              <span class="timeline-date">2025 — Present</span>
+            </div>
+            <p class="timeline-org">Healthcare DME Provider (US)</p>
+            <p class="timeline-desc">
+              Built and maintain a production service that ingests clinical fax and email attachments, extracts
+              structured order and clinical data with a vision model (GPT-4o Vision), and writes to a Quickbase
+              app used for insurance documentation — around 30 documents a day. Diagnosed and fixed a data-integrity
+              defect that had silently merged over 100 records, and hardened the pipeline against unreliable
+              model output.
+            </p>
+            <ul class="tag-list">
+              <li>Python</li><li>FastAPI</li><li>GPT-4o Vision</li><li>Quickbase API</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-head">
               <h3>Software &amp; Automation Developer</h3>
               <span class="timeline-date">2024 — Present</span>
             </div>
@@ -308,6 +328,36 @@
       <h2 class="section-title reveal">Selected work</h2>
       <!-- Sourced from github.com/hameemvs. Edit title/description/tags any time to better match the real project. -->
       <div class="projects-grid">
+
+        <article class="project-card reveal" data-project="doc-extraction">
+          <button type="button" class="project-thumb" aria-label="View Document Extraction Pipeline case study">
+            <span aria-hidden="true">🩺</span>
+            <div class="thumb-overlay"><span>View Case Study →</span></div>
+          </button>
+          <div class="project-body">
+            <h3>Document Extraction Pipeline</h3>
+            <p>A production service for a US healthcare DME provider that extracts structured clinical data from faxed/emailed documents with GPT-4o Vision — plus the data-integrity investigation that came with it.</p>
+            <ul class="tag-list small">
+              <li>Python</li><li>FastAPI</li><li>GPT-4o Vision</li><li>Quickbase API</li>
+            </ul>
+            <div class="project-full-desc" hidden>
+              <h4>Context</h4>
+              <p>This system processes clinical documentation for a US healthcare durable medical equipment (DME) provider. Referring physicians and clinics send orders and clinical notes by fax and email; the pipeline extracts structured order and clinical data and writes it into the company's Quickbase system, which drives insurance documentation. Correctness matters directly — a wrong clinical statement doesn't stay internal, it goes out on a physician's letterhead in support of an insurance claim.</p>
+
+              <h4>The Defect</h4>
+              <p>Two email identifiers differed only in letter case, but the database matched them case-insensitively. Every time the differently-cased variant appeared, its record silently merged into the other instead of creating a new one. Over time this had quietly overwritten 148 of 902 email records and mis-parented 607 child rows under the wrong parent.</p>
+
+              <h4>How It Was Found</h4>
+              <p>I confirmed the pattern by checking whether each affected row had an absent "case-twin" — a record that should have existed under the differently-cased ID but didn't. To be sure the count was real, I ran the check independently and compared it against the client's own count, with neither side seeing the other's numbers first. They matched exactly. Separately, I recovered 895 identifiers from the client's Outlook mailbox with zero misses, giving a second, independent line of evidence for how many records should have existed.</p>
+
+              <h4>The Fix &amp; Migration</h4>
+              <p>The permanent fix replaces the identifier with a case-normalized hash key, so two IDs that only differ by case can never collide again. I considered mapping to a canonical Quickbase Record ID instead, but record IDs get reassigned when rows are deleted and recreated during cleanup — a hash of the normalized email survives that. One detail mattered: the read path parsed identifiers the same case-sensitive way the write path did, so a fix that only touched writes would have left lookups broken; both had to change together. The database-side repair — restoring the merged and mis-parented records — was carried out by the client's data team; I diagnosed the collision, worked out the mechanism, and built the fix on the extraction/pipeline side, then migrated the live system with zero data loss.</p>
+
+              <h4>What I'd Do Differently</h4>
+              <p>The error-logging table meant to catch failures like this had never successfully written a single row — the code treated a partial-success HTTP status from the logging API as a full success, so every failure silently vanished instead of being recorded. Weeks of failures were invisible for exactly the reason you'd want them to be visible: nothing was watching the watcher. The lesson: error paths need testing as much as happy paths — a logging pipeline that's never seen a real failure in staging hasn't actually been tested.</p>
+            </div>
+          </div>
+        </article>
 
         <article class="project-card reveal" data-project="eczoone">
           <button type="button" class="project-thumb has-img thumb-top" aria-label="View EC Zoone case study">
@@ -464,7 +514,7 @@
     </div>
     <div class="modal-content">
       <h3 id="modalTitle"></h3>
-      <p id="modalDesc"></p>
+      <div id="modalDesc"></div>
       <ul class="tag-list small" id="modalTags"></ul>
       <div class="project-links" id="modalLinks"></div>
     </div>
