@@ -257,12 +257,14 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.15; }
 }
 .hero-photo-frame {
   position: relative;
-  width: 300px;
+  width: 320px;
   aspect-ratio: 4 / 4.7;
   border-radius: 28px;
   overflow: hidden;
   border: 1px solid var(--border);
-  background: linear-gradient(160deg, var(--accent-soft), transparent);
+  background:
+    radial-gradient(120% 100% at 50% 15%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%),
+    linear-gradient(160deg, var(--accent-soft), transparent);
   box-shadow: var(--shadow);
 }
 .hero-photo-frame::after {
@@ -276,7 +278,8 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.15; }
 .hero-photo-frame img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center bottom;
 }
 
 .scroll-cue {
