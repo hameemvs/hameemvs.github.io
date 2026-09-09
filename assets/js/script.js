@@ -169,6 +169,139 @@
     }
   });
 
+  /* ---------- Project case-study modal ---------- */
+  const projectModal = document.getElementById("projectModal");
+  const modalImg = document.getElementById("modalImg");
+  const modalPrev = document.getElementById("modalPrev");
+  const modalNext = document.getElementById("modalNext");
+  const modalImgCount = document.getElementById("modalImgCount");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalTags = document.getElementById("modalTags");
+  const modalLinks = document.getElementById("modalLinks");
+  const modalClose = document.getElementById("modalClose");
+
+  // Extra gallery images not shown on the card itself, keyed by data-project id.
+  const extraProjectImages = {
+    "retail-hub": ["assets/img/retail-hub-income.jpg"],
+  };
+
+  let modalImages = [];
+  let modalImageIndex = 0;
+  let lastFocusedEl = null;
+
+  function renderModalImage() {
+    modalImg.src = modalImages[modalImageIndex];
+    const multi = modalImages.length > 1;
+    modalPrev.hidden = !multi;
+    modalNext.hidden = !multi;
+    modalImgCount.hidden = !multi;
+    if (multi) modalImgCount.textContent = `${modalImageIndex + 1} / ${modalImages.length}`;
+  }
+
+  function openProjectModal(card) {
+    const thumbImg = card.querySelector(".project-thumb img");
+    const id = card.dataset.project;
+    modalImages = [thumbImg.getAttribute("src"), ...(extraProjectImages[id] || [])];
+    modalImageIndex = 0;
+    renderModalImage();
+
+    modalTitle.textContent = card.querySelector(".project-body h3").textContent;
+    modalDesc.textContent = card.querySelector(".project-body p").textContent;
+
+    modalTags.innerHTML = "";
+    card.querySelectorAll(".tag-list.small li").forEach((li) => {
+      const clone = document.createElement("li");
+      clone.textContent = li.textContent;
+      modalTags.appendChild(clone);
+    });
+
+    modalLinks.innerHTML = "";
+    card.querySelectorAll(".project-links a").forEach((a) => {
+      modalLinks.appendChild(a.cloneNode(true));
+    });
+
+    lastFocusedEl = document.activeElement;
+    projectModal.hidden = false;
+    requestAnimationFrame(() => projectModal.classList.add("open"));
+    document.body.style.overflow = "hidden";
+    modalClose.focus();
+  }
+
+  function closeProjectModal() {
+    projectModal.classList.remove("open");
+    document.body.style.overflow = "";
+    setTimeout(() => {
+      projectModal.hidden = true;
+    }, 250);
+    if (lastFocusedEl) lastFocusedEl.focus();
+  }
+
+  document.querySelectorAll(".project-card[data-project]").forEach((card) => {
+    const trigger = card.querySelector(".project-thumb");
+    if (trigger) trigger.addEventListener("click", () => openProjectModal(card));
+  });
+
+  modalClose.addEventListener("click", closeProjectModal);
+  projectModal.addEventListener("click", (e) => {
+    if (e.target === projectModal) closeProjectModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !projectModal.hidden) closeProjectModal();
+  });
+  modalPrev.addEventListener("click", () => {
+    modalImageIndex = (modalImageIndex - 1 + modalImages.length) % modalImages.length;
+    renderModalImage();
+  });
+  modalNext.addEventListener("click", () => {
+    modalImageIndex = (modalImageIndex + 1) % modalImages.length;
+    renderModalImage();
+  });
+
+  /* ---------- Motion polish: hero parallax, card tilt, cursor spotlight ---------- */
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const supportsFineHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if (!prefersReducedMotion && supportsFineHover) {
+    const heroEl = document.querySelector(".hero");
+    const spotlight = document.getElementById("cursorSpotlight");
+
+    if (heroEl) {
+      heroEl.addEventListener("mousemove", (e) => {
+        const rect = heroEl.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        heroEl.style.setProperty("--parallax-x", `${x * 30}px`);
+        heroEl.style.setProperty("--parallax-y", `${y * 30}px`);
+
+        if (spotlight) {
+          spotlight.style.left = `${e.clientX}px`;
+          spotlight.style.top = `${e.clientY}px`;
+        }
+      });
+      heroEl.addEventListener("mouseenter", () => spotlight && spotlight.classList.add("active"));
+      heroEl.addEventListener("mouseleave", () => {
+        heroEl.style.setProperty("--parallax-x", "0px");
+        heroEl.style.setProperty("--parallax-y", "0px");
+        spotlight && spotlight.classList.remove("active");
+      });
+    }
+
+    document.querySelectorAll(".project-card").forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        const rotateX = (-py * 8).toFixed(2);
+        const rotateY = (px * 8).toFixed(2);
+        card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "";
+      });
+    });
+  }
+
   /* ---------- Footer year ---------- */
   document.getElementById("year").textContent = new Date().getFullYear();
 })();

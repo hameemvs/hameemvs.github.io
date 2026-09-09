@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abdul Hameem — Software Developer &amp; Automation Engineer</title>
 <meta name="description" content="Abdul Hameem — Software Developer & Automation Engineer. Laravel, React, Next.js, Flutter. Building web apps, Android apps and workflow automations with Make.com, Zapier, n8n and Python scraping.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hameemvs.github.io/">
+<meta property="og:title" content="Abdul Hameem — Software Developer & Automation Engineer">
+<meta property="og:description" content="Full-stack web apps with Laravel, React & Next.js, Android apps with Flutter, and workflow automation with Make.com, Zapier, n8n & Python.">
+<meta property="og:image" content="https://hameemvs.github.io/assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Abdul Hameem — Software Developer & Automation Engineer">
+<meta name="twitter:description" content="Full-stack web apps with Laravel, React & Next.js, Android apps with Flutter, and workflow automation with Make.com, Zapier, n8n & Python.">
+<meta name="twitter:image" content="https://hameemvs.github.io/assets/img/og-image.jpg">
+
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +28,7 @@
 <body>
 
 <div class="progress-bar" id="progressBar"></div>
+<div class="cursor-spotlight" id="cursorSpotlight"></div>
 
 <header class="site-header" id="siteHeader">
   <div class="container nav-inner">
@@ -61,6 +76,10 @@
         </p>
         <div class="hero-cta reveal">
           <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="assets/files/Abdul-Hameem-Resume.pdf" class="btn btn-outline" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 19h16"/></svg>
+            Download CV
+          </a>
           <a href="#contact" class="btn btn-outline">Get in Touch</a>
         </div>
         <div class="hero-socials reveal">
@@ -113,6 +132,24 @@
     <a href="#about" class="scroll-cue" aria-label="Scroll to About">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
     </a>
+  </section>
+
+  <!-- TRUSTED BY -->
+  <section class="trusted-by">
+    <div class="container trusted-by-inner">
+      <p class="trusted-by-label reveal">Work delivered for</p>
+      <div class="trusted-by-items reveal">
+        <span class="trusted-by-item">
+          <span class="trusted-by-icon">🏢</span> Imara Software Solutions
+        </span>
+        <span class="trusted-by-item">
+          <span class="trusted-by-icon">🛍️</span> EC Zoone
+        </span>
+        <span class="trusted-by-item">
+          <span class="trusted-by-icon">🏪</span> Retail Hub Merchants
+        </span>
+      </div>
+    </div>
   </section>
 
   <!-- ABOUT -->
@@ -272,11 +309,11 @@
       <!-- Sourced from github.com/hameemvs. Edit title/description/tags any time to better match the real project. -->
       <div class="projects-grid">
 
-        <article class="project-card reveal">
-          <div class="project-thumb has-img thumb-top">
+        <article class="project-card reveal" data-project="eczoone">
+          <button type="button" class="project-thumb has-img thumb-top" aria-label="View EC Zoone case study">
             <img src="assets/img/eczoone-shop.png" alt="EC Zoone product listing page" loading="lazy">
-            <div class="thumb-overlay"><span>Visit Live Site →</span></div>
-          </div>
+            <div class="thumb-overlay"><span>View Case Study →</span></div>
+          </button>
           <div class="project-body">
             <h3>EC Zoone</h3>
             <p>A live e-commerce storefront for beauty and skincare products, with multi-store cart, filtering and a full checkout flow.</p>
@@ -289,11 +326,11 @@
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-thumb has-img thumb-top">
+        <article class="project-card reveal" data-project="retail-hub">
+          <button type="button" class="project-thumb has-img thumb-top" aria-label="View Retail Hub case study">
             <img src="assets/img/retail-hub-dashboard.jpg" alt="Retail Hub Android app dashboard" loading="lazy">
-            <div class="thumb-overlay"><span>Android App</span></div>
-          </div>
+            <div class="thumb-overlay"><span>View Case Study →</span></div>
+          </button>
           <div class="project-body">
             <h3>Retail Hub</h3>
             <p>An Android POS &amp; inventory app for small retailers — sales, customers, repackaging and income/expense tracking in one dashboard.</p>
@@ -303,11 +340,11 @@
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-thumb has-img">
+        <article class="project-card reveal" data-project="linkedin-scraper">
+          <button type="button" class="project-thumb has-img" aria-label="View LinkedIn Profile Scraper case study">
             <img src="assets/img/automation-linkedin-scraper.png" alt="LinkedIn Profile Scraper Make.com scenario diagram" loading="lazy">
-            <div class="thumb-overlay"><span>Make.com Scenario</span></div>
-          </div>
+            <div class="thumb-overlay"><span>View Case Study →</span></div>
+          </button>
           <div class="project-body">
             <h3>LinkedIn Profile Scraper</h3>
             <p>A Make.com scenario that drives PhantomBuster to scrape LinkedIn profiles, then parses and logs results to Airtable via OpenAI.</p>
@@ -317,11 +354,11 @@
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-thumb has-img">
+        <article class="project-card reveal" data-project="social-summarizer">
+          <button type="button" class="project-thumb has-img" aria-label="View Social Media Summarizer case study">
             <img src="assets/img/automation-social-summarizer.png" alt="Social Media Summarizer Make.com scenario diagram" loading="lazy">
-            <div class="thumb-overlay"><span>Make.com Scenario</span></div>
-          </div>
+            <div class="thumb-overlay"><span>View Case Study →</span></div>
+          </button>
           <div class="project-body">
             <h3>Social Media Summarizer</h3>
             <p>A Make.com scenario that fetches content from a submitted URL and uses OpenAI to generate ready-to-post social media summaries.</p>
@@ -331,11 +368,11 @@
           </div>
         </article>
 
-        <article class="project-card reveal">
-          <div class="project-thumb has-img">
+        <article class="project-card reveal" data-project="outlook-to-csv">
+          <button type="button" class="project-thumb has-img" aria-label="View Outlook Attachments to CSV case study">
             <img src="assets/img/automation-outlook-to-csv.png" alt="Outlook Attachments to CSV Make.com scenario diagram" loading="lazy">
-            <div class="thumb-overlay"><span>Make.com Scenario</span></div>
-          </div>
+            <div class="thumb-overlay"><span>View Case Study →</span></div>
+          </button>
           <div class="project-body">
             <h3>Outlook Attachments to CSV</h3>
             <p>A Make.com scenario that watches an Outlook inbox, pulls email attachments, summarizes them with OpenAI and saves the result as CSV to Google Drive.</p>
@@ -413,6 +450,26 @@
   </section>
 
 </main>
+
+<div class="modal-overlay" id="projectModal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button type="button" class="modal-close" id="modalClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-gallery">
+      <img id="modalImg" src="" alt="">
+      <button type="button" class="modal-nav modal-prev" id="modalPrev" aria-label="Previous image" hidden>‹</button>
+      <button type="button" class="modal-nav modal-next" id="modalNext" aria-label="Next image" hidden>›</button>
+      <span class="modal-img-count" id="modalImgCount" hidden></span>
+    </div>
+    <div class="modal-content">
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+      <ul class="tag-list small" id="modalTags"></ul>
+      <div class="project-links" id="modalLinks"></div>
+    </div>
+  </div>
+</div>
 
 <footer class="site-footer">
   <div class="container footer-inner">
