@@ -153,7 +153,7 @@
 
     const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
     const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    window.location.href = `mailto:ahmatafthal@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:dev.hameem@gmail.com?subject=${subject}&body=${body}`;
 
     formNote.textContent = "Opening your email client…";
     contactForm.reset();
