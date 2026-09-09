@@ -526,6 +526,7 @@ h1, h2, h3 { font-family: var(--font-head); line-height: 1.15; }
 .form-row input:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
 .contact-form .btn { justify-self: start; }
 .form-note { font-size: .85rem; color: var(--accent-2); min-height: 1.2em; }
+.form-note-error { color: #f26161; }
 
 .contact-cards { display: grid; gap: 14px; }
 .contact-card {

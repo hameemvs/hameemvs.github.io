@@ -137,22 +137,36 @@
   );
   statEls.forEach((el) => statObserver.observe(el));
 
-  /* ---------- Contact form (mailto fallback, no backend) ---------- */
+  /* ---------- Contact form (Formspree) ---------- */
   const contactForm = document.getElementById("contactForm");
   const formNote = document.getElementById("formNote");
+  const submitBtn = contactForm.querySelector("button[type=submit]");
 
-  contactForm.addEventListener("submit", (e) => {
+  contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const message = document.getElementById("message").value.trim();
+    submitBtn.disabled = true;
+    formNote.textContent = "Sending…";
+    formNote.classList.remove("form-note-error");
 
-    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
-    const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    window.location.href = `mailto:dev.hameem@gmail.com?subject=${subject}&body=${body}`;
+    try {
+      const response = await fetch(contactForm.action, {
+        method: "POST",
+        body: new FormData(contactForm),
+        headers: { Accept: "application/json" },
+      });
 
-    formNote.textContent = "Opening your email client…";
-    contactForm.reset();
+      if (response.ok) {
+        formNote.textContent = "Thanks! Your message has been sent — I'll reply within a day.";
+        contactForm.reset();
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (err) {
+      formNote.textContent = "Something went wrong. Please email me directly at dev.hameem@gmail.com.";
+      formNote.classList.add("form-note-error");
+    } finally {
+      submitBtn.disabled = false;
+    }
   });
 
   /* ---------- Footer year ---------- */
