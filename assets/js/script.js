@@ -95,23 +95,21 @@
 
   function typeLoop() {
     const current = roles[roleIndex];
-    if (!deleting) {
-      charIndex++;
-      if (charIndex >= current.length) {
-        deleting = true;
-        setTimeout(typeLoop, 1600);
-        return;
-      }
-    } else {
-      charIndex--;
-      if (charIndex <= 0) {
-        deleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
-        setTimeout(typeLoop, 300);
-        return;
-      }
-    }
     typedEl.textContent = current.slice(0, charIndex);
+
+    if (!deleting && charIndex === current.length) {
+      deleting = true;
+      setTimeout(typeLoop, 1600);
+      return;
+    }
+    if (deleting && charIndex === 0) {
+      deleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      setTimeout(typeLoop, 300);
+      return;
+    }
+
+    charIndex += deleting ? -1 : 1;
     setTimeout(typeLoop, deleting ? 35 : 65);
   }
   setTimeout(typeLoop, 1600);
