@@ -73,10 +73,7 @@
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-          revealObserver.unobserve(entry.target);
-        }
+        entry.target.classList.toggle("in-view", entry.isIntersecting);
       });
     },
     { threshold: 0.15 }
