@@ -286,6 +286,8 @@
         const y = (e.clientY - rect.top) / rect.height - 0.5;
         heroEl.style.setProperty("--parallax-x", `${x * 30}px`);
         heroEl.style.setProperty("--parallax-y", `${y * 30}px`);
+        heroEl.style.setProperty("--scene-x", `${-y * 10}deg`);
+        heroEl.style.setProperty("--scene-y", `${x * 16}deg`);
 
         if (spotlight) {
           spotlight.style.left = `${e.clientX}px`;
@@ -296,11 +298,13 @@
       heroEl.addEventListener("mouseleave", () => {
         heroEl.style.setProperty("--parallax-x", "0px");
         heroEl.style.setProperty("--parallax-y", "0px");
+        heroEl.style.removeProperty("--scene-x");
+        heroEl.style.removeProperty("--scene-y");
         spotlight && spotlight.classList.remove("active");
       });
     }
 
-    document.querySelectorAll(".project-card").forEach((card) => {
+    document.querySelectorAll(".project-card, .skill-card, .service-card").forEach((card) => {
       card.addEventListener("mousemove", (e) => {
         const rect = card.getBoundingClientRect();
         const px = (e.clientX - rect.left) / rect.width - 0.5;

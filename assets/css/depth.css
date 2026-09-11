@@ -1,0 +1,41 @@
+/* Lightweight CSS 3D scene. All content remains ordinary accessible HTML. */
+:root { --depth-shadow: 0 24px 45px -24px #0009, 0 6px 0 -2px var(--border); }
+body { background-image: radial-gradient(ellipse at 95% 15%, #cc96300c, transparent 45%); }
+.hero { isolation: isolate; padding-top: 140px; }
+.hero::before { z-index: 0; opacity: .65; }
+.hero::after { content: ""; position: absolute; z-index: 0; pointer-events: none; left: -25%; bottom: -180px; width: 150%; height: 520px; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 64px 64px; transform: perspective(500px) rotateX(62deg); mask-image: linear-gradient(transparent, #0008, transparent); }
+.hero-title { letter-spacing: -.055em; text-shadow: 0 2px 0 var(--border), 0 7px 0 color-mix(in srgb, var(--border) 40%, transparent), 0 16px 30px #0003; }
+.hero-photo { perspective: 1100px; padding: 32px 20px 38px; }
+.hero-photo-frame { width: 340px; transform-style: preserve-3d; transform: rotateX(var(--scene-x, 3deg)) rotateY(var(--scene-y, -9deg)); transition: transform .3s ease-out; }
+.hero-photo-frame img { transform: translateZ(44px); filter: drop-shadow(18px 24px 18px #0006); }
+.hero-photo-frame::after { width: 100%; top: 2%; border: 12px solid color-mix(in srgb, var(--accent) 70%, var(--surface)); box-shadow: inset 2px 3px 5px #fff5, 8px 12px 0 var(--accent-soft), 0 0 65px #f2b63230; transform: translateX(-50%) translateZ(-30px); }
+.hero-photo-frame::before { width: 120%; }
+.portrait-platform { position: absolute; bottom: -15px; left: -8%; width: 116%; height: 100px; border-radius: 50%; background: linear-gradient(140deg, var(--surface), var(--accent-soft)); border: 1px solid var(--accent); box-shadow: 0 12px 0 var(--border), 0 30px 30px #0005, inset 0 2px 8px #fff2; transform: rotateX(65deg) translateZ(-15px); }
+.orbit { position: absolute; inset: -4% -13% 5%; border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); border-radius: 50%; pointer-events: none; transform: rotateZ(-28deg) rotateY(55deg); }
+.orbit-two { inset: 6% -10% -2%; transform: rotateZ(40deg) rotateX(65deg); border-color: var(--text-muted); opacity: .35; }
+.floating-tech { position: absolute; z-index: 3; padding: 13px 18px; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border)); border-radius: 15px; color: var(--accent); font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; background: linear-gradient(135deg, var(--surface), var(--accent-soft)); box-shadow: 5px 7px 0 color-mix(in srgb, var(--border) 85%, transparent), 10px 20px 25px #0004, inset 0 1px 0 #fff3; animation: tech-float 6s ease-in-out infinite; }
+.floating-tech small { display: block; font: 500 .65rem var(--font-body); margin-top: 5px; color: var(--text-muted); }
+.tech-web { left: -34px; top: 12%; --angle: -10deg; }
+.tech-mobile { right: -28px; top: 42%; --angle: 9deg; animation-delay: -2s; }
+.tech-auto { left: -8px; bottom: 5%; --angle: -5deg; animation-delay: -4s; }
+@keyframes tech-float { 0%,100% { transform: translateZ(75px) translateY(0) rotate(var(--angle)); } 50% { transform: translateZ(75px) translateY(-12px) rotate(var(--angle)); } }
+.skill-card, .service-card, .project-card, .stat, .timeline-content, .contact-form, .contact-card { background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 92%, white), var(--surface) 55%); box-shadow: var(--depth-shadow), inset 0 1px 0 #ffffff12; border-radius: 22px; }
+.project-card, .skill-card, .service-card { position: relative; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.project-card:hover, .skill-card:hover, .service-card:hover { border-color: var(--accent); box-shadow: 0 30px 50px -20px #0007, 0 7px 0 -2px var(--accent-soft); }
+.skill-icon, .service-icon { width: 58px; height: 58px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 16px; background: linear-gradient(135deg, var(--accent-soft), var(--surface)); box-shadow: 4px 5px 0 var(--border), inset 1px 1px 0 #fff2; transform: rotate(-6deg); }
+.project-thumb { height: 210px; border-bottom: 1px solid var(--border); }
+.project-thumb.has-img img { object-fit: contain; padding: 12px; background: color-mix(in srgb, var(--bg) 90%, var(--accent)); }
+.project-thumb.has-img.thumb-top img { object-fit: cover; padding: 0; }
+.btn-primary { color: #201703; box-shadow: 0 5px 0 #9c6c18, 0 14px 25px #bd8a2633, inset 0 1px 0 #fff8; }
+.btn-primary:hover { box-shadow: 0 7px 0 #9c6c18, 0 18px 30px #bd8a2644; }
+.btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 #9c6c18; }
+.btn-outline, .social-link { background: var(--surface); box-shadow: 0 4px 0 var(--border); }
+.section-tag::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--accent); box-shadow: 3px 3px 0 var(--accent-soft); transform: rotate(-15deg); margin-right: 12px; }
+.section { scroll-margin-top: 80px; }
+.thumb-overlay, .project-thumb:focus-visible .thumb-overlay { opacity: 1; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.modal-nav[hidden], .modal-gallery[hidden] { display: none; }
+@media (max-width: 1100px) and (min-width: 761px) { .nav-link { padding-inline: 8px; font-size: .8rem; } .btn-nav { display: none; } }
+@media (max-width: 860px) { .hero { padding-top: 108px; } .hero-photo-frame { width: 260px; } .hero-photo { padding: 20px 25px 30px; } .hero-text { flex-basis: auto; } .hero-title { font-size: clamp(2.5rem, 9vw, 4rem); } .hero-inner { gap: 26px; } }
+@media (max-width: 480px) { .hero-photo-frame { width: 220px; } .floating-tech { padding: 9px 12px; font-size: .9rem; } .floating-tech small { font-size: .58rem; } .tech-web { left: -20px; } .tech-mobile { right: -18px; } .project-thumb { height: 200px; } .stat { padding: 18px 10px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } .cursor-spotlight { display: none; } }
